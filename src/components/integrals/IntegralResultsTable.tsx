@@ -15,7 +15,6 @@ export function IntegralResultsTable({ results }: IntegralResultsTableProps) {
                     width: "100%",
                     borderCollapse: "collapse",
                     fontSize: "14px",
-                    color: "#111827",
                 }}
             >
                 <thead>

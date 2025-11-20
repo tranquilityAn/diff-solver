@@ -1,4 +1,4 @@
-import { Integrand } from "../../types/math";
+import type { Integrand } from "../../types/math";
 
 export interface IntegrandOption {
     id: string;

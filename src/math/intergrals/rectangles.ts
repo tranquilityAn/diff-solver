@@ -1,4 +1,4 @@
-import { IntegralParams } from "../../types/math.js";
+import type { IntegralParams } from "../../types/math";
 
 /**
  * Обчислення визначеного інтегралу методом лівих прямокутників.

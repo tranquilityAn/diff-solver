@@ -1,4 +1,4 @@
-import { IntegralParams } from "../../types/math";
+import type { IntegralParams } from "../../types/math";
 
 /**
  * Обчислення визначеного інтегралу методом Сімпсона (параболічним методом).

@@ -12,9 +12,9 @@ export interface Point {
 
 // результат інтегрування
 export interface IntegralResult {
+    methodId: "left" | "right" | "middle" | "trapezoid" | "simpson";
     methodName: string;
     value: number;
-    steps: number;
 }
 
 // результат розв’язку ОДР (масив точок)

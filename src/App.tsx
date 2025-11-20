@@ -1,35 +1,27 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import { AppLayout } from "./components/layout/AppLayout";
+import { Header } from "./components/layout/Header";
+import { ModeTabs, type AppMode } from "./components/layout/ModeTabs";
+import { IntegralPanel } from "./components/integrals/IntegralPanel.tsx";
+// TODO:
+// import { ODEPanel } from "./components/ode/ODEPanel";
 
 function App() {
-  const [count, setCount] = useState(0)
+    const [mode, setMode] = useState<AppMode>("integral");
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    return (
+        <AppLayout>
+            <Header />
+            <ModeTabs mode={mode} onChange={setMode} />
+
+            {mode === "integral" ? (
+                <IntegralPanel />
+            ) : (
+                <div>ODE panel will be here</div>
+                // <ODEPanel />
+            )}
+        </AppLayout>
+    );
 }
 
-export default App
+export default App;

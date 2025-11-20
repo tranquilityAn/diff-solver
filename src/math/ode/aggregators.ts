@@ -1,5 +1,4 @@
-// src/math/ode/aggregators.ts
-import { ODEParams, Point } from "../../types/math.ts";
+import { type ODEParams, type Point } from "../../types/math.ts";
 import { euler } from "./euler.ts";
 import { rungeKutta2 } from "./rungeKutta2.ts";
 import { rungeKutta3 } from "./rungeKutta3.ts";
@@ -37,4 +36,12 @@ export function solveODEWithAllMethods(params: ODEParams): ODEResult[] {
             points: rungeKutta4(params),
         },
     ];
+}
+
+export function solveODEWithSelectedMethods(
+    params: ODEParams,
+    methods: ODEMethodId[]
+): ODEResult[] {
+    const all = solveODEWithAllMethods(params);
+    return all.filter((res) => methods.includes(res.methodId));
 }

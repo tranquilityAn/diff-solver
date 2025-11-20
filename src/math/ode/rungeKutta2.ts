@@ -1,4 +1,4 @@
-import { ODEParams, Point } from "../../types/math";
+import { type ODEParams, type Point } from "../../types/math";
 
 /**
  * Обчислення розв'язку ОДР методом Рунге–Кутта 2-го порядку (Heun / improved Euler).

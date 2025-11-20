@@ -3,8 +3,7 @@ import { AppLayout } from "./components/layout/AppLayout";
 import { Header } from "./components/layout/Header";
 import { ModeTabs, type AppMode } from "./components/layout/ModeTabs";
 import { IntegralPanel } from "./components/integrals/IntegralPanel.tsx";
-// TODO:
-// import { ODEPanel } from "./components/ode/ODEPanel";
+import { ODEPanel } from "./components/ode/ODEPanel";
 
 function App() {
     const [mode, setMode] = useState<AppMode>("integral");
@@ -13,13 +12,7 @@ function App() {
         <AppLayout>
             <Header />
             <ModeTabs mode={mode} onChange={setMode} />
-
-            {mode === "integral" ? (
-                <IntegralPanel />
-            ) : (
-                <div>ODE panel will be here</div>
-                // <ODEPanel />
-            )}
+            {mode === "integral" ? <IntegralPanel /> : <ODEPanel />}
         </AppLayout>
     );
 }

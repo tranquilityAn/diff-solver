@@ -6,6 +6,13 @@ export interface ODEChartProps {
 
 const COLORS = ["#2563eb", "#16a34a", "#f97316", "#dc2626"];
 
+// Масив патернів для ліній:
+// "" - суцільна
+// "6, 4" - довгий штрих (6px лінія, 4px пропуск)
+// "2, 4" - крапки (2px лінія, 4px пропуск)
+// "10, 4, 2, 4" - штрих-пунктир
+const DASH_STYLES = ["", "6, 4", "2, 4", "10, 4, 2, 4"];
+
 export function ODEChart({ results }: ODEChartProps) {
     if (!results || results.length === 0) return null;
 
@@ -23,7 +30,7 @@ export function ODEChart({ results }: ODEChartProps) {
 
     const width = 640;
     const height = 320;
-    const padding = 32;
+    const padding = 40;
 
     const spanX = maxX - minX || 1;
     const spanY = maxY - minY || 1;
@@ -64,6 +71,7 @@ export function ODEChart({ results }: ODEChartProps) {
                     if (!res.points.length) return null;
 
                     const color = COLORS[idx % COLORS.length];
+                    const dashStyle = DASH_STYLES[idx % DASH_STYLES.length];
                     const pathData = res.points
                         .map((p, i) => {
                             const x = mapX(p.x);
@@ -79,13 +87,26 @@ export function ODEChart({ results }: ODEChartProps) {
                                 fill="none"
                                 stroke={color}
                                 strokeWidth={2}
+                                strokeDasharray={dashStyle}
+                                strokeOpacity={0.8}
+                                style={{ mixBlendMode: "multiply" }}
                             />
                             {/* легенда */}
+                            <line 
+                                x1={padding + 10} 
+                                y1={padding + 20 * idx} 
+                                x2={padding + 30} 
+                                y2={padding + 20 * idx} 
+                                stroke={color} 
+                                strokeWidth={2}
+                                strokeDasharray={dashStyle}
+                            />
                             <text
-                                x={padding + 12}
-                                y={padding + 16 * (idx + 1)}
+                                x={padding + 36}
+                                y={padding + 20 * idx + 4}
                                 fontSize={12}
-                                fill={color}
+                                fill="#444"
+                                style={{ pointerEvents: 'none' }}
                             >
                                 {res.methodName}
                             </text>

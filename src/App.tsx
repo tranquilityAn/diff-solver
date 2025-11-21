@@ -10,8 +10,12 @@ function App() {
 
     return (
         <AppLayout>
+            <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
             <Header />
-            <ModeTabs mode={mode} onChange={setMode} />
+            </div>
+            <div style={{ display: "flex", justifyContent: "center", width: "100%" }}>
+                <ModeTabs mode={mode} onChange={setMode} />
+            </div>
             {mode === "integral" ? <IntegralPanel /> : <ODEPanel />}
         </AppLayout>
     );

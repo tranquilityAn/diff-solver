@@ -4,6 +4,8 @@ import { rungeKutta2 } from "./rungeKutta2.ts";
 import { rungeKutta3 } from "./rungeKutta3.ts";
 import { rungeKutta4 } from "./rungeKutta4.ts";
 
+export type ODEMethodId = "euler" | "rk2" | "rk3" | "rk4";
+
 export interface ODEResult {
     methodId: string;
     methodName: string;
@@ -43,5 +45,5 @@ export function solveODEWithSelectedMethods(
     methods: ODEMethodId[]
 ): ODEResult[] {
     const all = solveODEWithAllMethods(params);
-    return all.filter((res) => methods.includes(res.methodId));
+    return all.filter((res) => methods.includes(res.methodId as ODEMethodId));
 }

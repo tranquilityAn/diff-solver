@@ -64,6 +64,12 @@ export function useODECalculator() {
             return;
         }
 
+        let exactSolutionFn: ((x: number) => number) | undefined;
+
+        if (ode?.exactSolution) {
+            exactSolutionFn = (x: number) => ode.exactSolution!(x, a, y0);
+        }
+
         const params: ODEParams = {
             f: ode.func,
             a,
@@ -74,8 +80,32 @@ export function useODECalculator() {
 
         try {
             const solved = solveODEWithSelectedMethods(params, methods);
-            setError(null);
-            setResults(solved);
+
+            let withError: ODEResult[];
+
+            if (exactSolutionFn) {
+                withError = solved.map((res) => {
+                    const xs = res.points.map((p) => p.x);
+                    const ys = res.points.map((p) => p.y);
+
+                    const errors = xs.map((x, i) =>
+                        Math.abs(exactSolutionFn!(x) - ys[i])
+                    );
+
+                    const maxError = Math.max(...errors);
+                    const endError = errors[errors.length - 1];
+
+                    return {
+                        ...res,
+                        maxError,
+                        endError,
+                    };
+                });
+            } else {
+                withError = solved;
+            }
+
+            setResults(withError);
         } catch (e) {
             console.error(e);
             setError("Calculation error.");

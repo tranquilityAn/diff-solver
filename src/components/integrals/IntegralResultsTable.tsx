@@ -19,45 +19,46 @@ export function IntegralResultsTable({ results }: IntegralResultsTableProps) {
             >
                 <thead>
                     <tr>
-                        <th
-                            style={{
-                                textAlign: "left",
-                                borderBottom: "1px solid #ddd",
-                                padding: "8px",
-                            }}
-                        >
+                        <th style={{ textAlign: "left", padding: "8px" }}>
                             Method
                         </th>
-                        <th
-                            style={{
-                                textAlign: "right",
-                                borderBottom: "1px solid #ddd",
-                                padding: "8px",
-                            }}
-                        >
-                            Value
+                        <th style={{ textAlign: "right", padding: "8px" }}>
+                            Approx. value
+                        </th>
+                        <th style={{ textAlign: "right", padding: "8px" }}>
+                            Exact value
+                        </th>
+                        <th style={{ textAlign: "right", padding: "8px" }}>
+                            Abs. error
+                        </th>
+                        <th style={{ textAlign: "right", padding: "8px" }}>
+                            Rel. error
                         </th>
                     </tr>
                 </thead>
                 <tbody>
                     {results.map((r) => (
-                        <tr key={r.methodName}>
-                            <td
-                                style={{
-                                    padding: "8px",
-                                    borderBottom: "1px solid #f0f0f0",
-                                }}
-                            >
+                        <tr key={r.methodId}>
+                            <td style={{ padding: "8px", textAlign: "left" }}>
                                 {r.methodName}
                             </td>
-                            <td
-                                style={{
-                                    padding: "8px",
-                                    textAlign: "right",
-                                    borderBottom: "1px solid #f0f0f0",
-                                }}
-                            >
+                            <td style={{ padding: "8px", textAlign: "right" }}>
                                 {r.value.toFixed(6)}
+                            </td>
+                            <td style={{ padding: "8px", textAlign: "right" }}>
+                                {r.exactValue !== undefined
+                                    ? r.exactValue.toFixed(6)
+                                    : "—"}
+                            </td>
+                            <td style={{ padding: "8px", textAlign: "right" }}>
+                                {r.absError !== undefined
+                                    ? r.absError.toExponential(3)
+                                    : "—"}
+                            </td>
+                            <td style={{ padding: "8px", textAlign: "right" }}>
+                                {r.relError !== undefined
+                                    ? (r.relError * 100).toFixed(3) + " %"
+                                    : "—"}
                             </td>
                         </tr>
                     ))}

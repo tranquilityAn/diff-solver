@@ -15,6 +15,9 @@ export interface IntegralResult {
     methodId: "left" | "right" | "middle" | "trapezoid" | "simpson";
     methodName: string;
     value: number;
+    exactValue?: number;   // точний / еталонний інтеграл
+    absError?: number;     // |I_exact - I_num|
+    relError?: number;     // |I_exact - I_num| / |I_exact|
 }
 
 // результат розв’язку ОДР (масив точок)
@@ -22,6 +25,8 @@ export interface ODEResult {
     methodName: string;
     points: Point[];
     steps: number;
+    maxError?: number;   // max_i |y_exact(x_i) - y_i|
+    endError?: number;   // |y_exact(b) - y_N|
 }
 
 // параметри задачі для інтеграла

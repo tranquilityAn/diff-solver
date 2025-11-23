@@ -2,6 +2,7 @@ import { useState } from "react";
 import { integrandOptions } from "../math/functions/integrandOptions";
 import { computeAllIntegrals } from "../math/intergrals/aggregators";
 import { type IntegralParams, type IntegralResult } from "../types/math";
+import { computeIntegralError } from "../math/error";
 
 export type IntegralMethodId =
     | "left"
@@ -76,6 +77,16 @@ export function useIntegralCalculator() {
             return;
         }
 
+        let exactValue: number | undefined = undefined;
+
+        if (integrand.exactIntegral) {
+            try {
+                exactValue = integrand.exactIntegral(a, b);
+            } catch {
+                exactValue = undefined;
+            }
+        }
+
         // ---- обчислення ----
         const params: IntegralParams = {
             f: integrand.func,
@@ -86,7 +97,25 @@ export function useIntegralCalculator() {
 
         try {
             const all = computeAllIntegrals(params);
-            const filtered = all.filter((res) =>
+
+            // ---- додати помилки ----  // ADD THIS
+            let withError: IntegralResult[] = all;
+
+            if (exactValue !== undefined) {
+                withError = all.map((res) => {
+                    const absError = Math.abs(exactValue! - res.value);
+                    const relError = absError / Math.abs(exactValue!);
+
+                    return {
+                        ...res,
+                        exactValue,
+                        absError,
+                        relError,
+                    };
+                });
+            }
+
+            const filtered = withError.filter((res) =>
                 methods.includes(res.methodId)
             );
 

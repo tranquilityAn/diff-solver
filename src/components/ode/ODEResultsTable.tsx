@@ -8,7 +8,7 @@ export interface ODEResultsTableProps {
 function SingleResultTable({ res }: { res: ODEResult }) {
     const [isExpanded, setIsExpanded] = useState(false);
 
-    const LIMIT = 10;
+    const LIMIT = 3;
     const totalPoints = res.points.length;
     const shouldTruncate = totalPoints > LIMIT && !isExpanded;
 
@@ -18,7 +18,22 @@ function SingleResultTable({ res }: { res: ODEResult }) {
 
     return (
         <div>
-            <h3 style={{ marginBottom: "8px" }}>Table: {res.methodName}</h3>
+            <h3 style={{ marginBottom: "8px" }}>
+                Table: {res.methodName}
+                {res.maxError !== undefined && (
+                    <span
+                        style={{
+                            marginLeft: "8px",
+                            fontSize: "0.9em",
+                            fontWeight: 400,
+                            color: "#4b5563",
+                        }}
+                    >
+                        (max |error| ≈ {res.maxError.toExponential(2)},{"  "}end
+                        |error| ≈ {res.endError?.toExponential(2)})
+                    </span>
+                )}
+            </h3>
             <table
                 style={{
                     width: "100%",

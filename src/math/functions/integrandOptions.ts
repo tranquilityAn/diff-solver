@@ -4,6 +4,7 @@ export interface IntegrandOption {
     id: string;
     label: string;
     func: Integrand;
+    exactIntegral?: (a: number, b: number) => number;
 }
 
 export const integrandOptions: IntegrandOption[] = [
@@ -11,11 +12,13 @@ export const integrandOptions: IntegrandOption[] = [
         id: "exp_minus_x",
         label: "f(x) = e^{-x}",
         func: (x) => Math.exp(-x),
+        exactIntegral: (a, b) => Math.exp(-a) - Math.exp(-b),
     },
     {
         id: "sin_x",
         label: "f(x) = sin(x)",
         func: (x) => Math.sin(x),
+        exactIntegral: (a, b) => -Math.cos(b) + Math.cos(a),
     },
     {
         id: "exp_minus_x2",
